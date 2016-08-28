@@ -376,13 +376,12 @@ function receivedPostback(event) {
           sendTextMessage(senderID, "You've selected " + payload.name + ". Please upload an image for the birthday card.");
           break;
       case 'START':
-          continue;
+          // continue
       case 'AWAITING_IMAGE':
-          continue;
+          // continue
       case 'AWAITING_BLURB':
-          continue;
+          // continue;
       default:
-      case 'START':
           sendTextMessage(senderID, 'State: %s, Payload: %s', state, payload);
   }
 }
