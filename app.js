@@ -320,12 +320,12 @@ function receivedMessage(event) {
   } else if (messageAttachments) {
       switch (state) {
           case 'AWAITING_IMAGE':
-            sendTextMessage(senderID, "Postcard image updated %s", messageAttachments.toString());
+            sendTextMessage(senderID, "Postcard image updated " + messageAttachments.toString());
             //sendImageMessage(senderID, messageAttachments.payload.url);
             state = 'AWAITING_ADDRESS';
             break;
           default:
-              sendTextMessage(senderID, 'State: %s', state);
+              sendTextMessage(senderID, 'State: ' + state);
       }
   }
 }
@@ -391,7 +391,7 @@ function receivedPostback(event) {
       case 'AWAITING_BLURB':
           // continue;
       default:
-          sendTextMessage(senderID, 'State: %s, Payload: %s', state, payload);
+          sendTextMessage(senderID, 'State: ' + state + ', ' + payload);
   }
 }
 
