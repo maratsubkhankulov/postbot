@@ -371,7 +371,7 @@ function receivedPostback(event) {
   // When a postback is called, we'll send a message back to the sender to 
   // let them know it was successful
 
-  if (state) {
+  switch (state) {
       case 'AWAITING_NAME':
           sendTextMessage(senderID, "You've selected " + payload.name + ". Please upload an image for the birthday card.");
           break;
