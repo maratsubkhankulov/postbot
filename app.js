@@ -265,7 +265,7 @@ function receivedMessage(event) {
             state = 'AWAITING_BLURB';
             sendTextMessage(senderID, "Great, I'll send the postcard to: " + messageText + ". Add a personal message.");
             break;
-        case 'AWAITING_ADDRESS':
+        case 'AWAITING_BLURB':
             postcard_blurb = messageText;
             sendConfirmPostcard(senderID, "That's it" + messageText + ". Add a personal message.");
         default:
