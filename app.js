@@ -325,7 +325,7 @@ function receivedMessage(event) {
             state = 'AWAITING_ADDRESS';
             break;
           default:
-              sendTextMessage(senderID, 'State: %s, Payload: %s', state, payload);
+              sendTextMessage(senderID, 'State: %s', state);
       }
   }
 }
