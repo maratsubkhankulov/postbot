@@ -172,7 +172,7 @@ function verifyRequestSignature(req, res, buf) {
   }
 }
 
-var states = ['START', 'AWAITING_NAME', 'AWAITING_IMAGE', 'AWAITING_BLURB'];
+var states = ['START', 'AWAITING_NAME', 'AWAITING_IMAGE', 'AWAITING_BLURB', 'AWAITING_BLURB', 'AWAITING_CONFIRMATION'];
 var state = 'START';
 
 var postcard_name = '';
@@ -400,6 +400,22 @@ function receivedPostback(event) {
           postcard_name = payload;
           state = 'AWAITING_IMAGE';
           break;
+
+      case 'AWAITING_CONFIRMATION':
+          switch (payload) {
+              case 'confirm_and_pay':
+                  sendTextMessage(senderID, "Payment processed.");
+                  state = 'START';
+                  break;
+              case 'restart':
+                  sendTextMessage(senderID, "Changes discarded.");
+                  state = 'START';
+                  break;
+              default:
+                  sendTextMessage(senderID, "Changes discarded.");
+          }
+          break;
+
       case 'START':
           // continue
       case 'AWAITING_IMAGE':
@@ -607,7 +623,7 @@ function sendConfirmPostcard(recipientId) {
   };  
 
   callSendAPI(messageData);
-  state = 'AWAITING_NAME';
+  state = 'AWAITING_CONFIRMATION';
 }
 
 function sendFriendMenu(recipientId) {
