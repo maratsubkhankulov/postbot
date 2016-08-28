@@ -261,7 +261,13 @@ function receivedMessage(event) {
 
     switch(state) {
         case 'AWAITING_ADDRESS':
+            postcard_address = messageText;
+            state = 'AWAITING_BLURB';
+            sendTextMessage(senderID, "Great, I'll send the postcard to: " + messageText + ". Add a personal message.");
             break;
+        case 'AWAITING_ADDRESS':
+            postcard_blurb = messageText;
+            sendConfirmPostcard(senderID, "That's it" + messageText + ". Add a personal message.");
         default:
             switch (messageText) {
               case 'start':
@@ -571,6 +577,36 @@ function sendTextMessage(recipientId, messageText) {
   };
 
   callSendAPI(messageData);
+}
+
+function sendFriendMenu(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          //image_url: postcard_image_url,
+          text: "We're all done. " + postcard_name + " " + postcard_address + " " + postcard_blurb,
+          buttons:[{
+            type: "postback",
+            title: "Confirm and pay",
+            payload: "confirm_and_pay"
+          }, {
+            type: "postback",
+            title: "Start again",
+            payload: "restart"
+          }]
+        }
+      }
+    }
+  };  
+
+  callSendAPI(messageData);
+  state = 'AWAITING_NAME';
 }
 
 function sendFriendMenu(recipientId) {
