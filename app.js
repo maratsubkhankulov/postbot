@@ -320,8 +320,8 @@ function receivedMessage(event) {
   } else if (messageAttachments) {
       switch (state) {
           case 'AWAITING_IMAGE':
-            sendTextMessage(senderID, "Postcard image updated " + JSON.stringify(messageAttachments));
-            //sendImageMessage(senderID, messageAttachments.payload.url);
+            sendTextMessage(senderID, "Postcard image updated ");
+            sendImageMessage(senderID, messageAttachments[0].payload.url);
             state = 'AWAITING_ADDRESS';
             break;
           default:
