@@ -562,17 +562,11 @@ function sendFriendMenu(recipientId) {
           buttons:[{
             type: "postback",
             title: "Jess Rogers",
-            payload: {
-                name: "Jess Rogers",
-                action: "set_name"
-            }
+            payload: "Jess Rogers payload"
           }, {
             type: "postback",
             title: "Al Green",
-            payload: {
-                name: "Al Green",
-                action: "set_name"
-            }
+            payload: "Al Green payload"
           }]
         }
       }
