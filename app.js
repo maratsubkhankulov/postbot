@@ -378,7 +378,7 @@ function receivedPostback(event) {
               sendTextMessage(senderID, "Unknown postback received: " + action_name);
       }
   } else {
-      sendTextMessage(senderID, "Unknown postback received");
+      sendTextMessage(senderID, "Unknown postback received: " + payload);
   }
 }
 
