@@ -318,7 +318,15 @@ function receivedMessage(event) {
         sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
-    sendTextMessage(senderID, "Postcard image updated");
+      switch (state) {
+          case 'AWAITING_IMAGE':
+            sendTextMessage(senderID, "Postcard image updated");
+            sendImageMessage(senderID);
+            state = 'AWAITING_ADDRESS';
+            break;
+          default:
+              sendTextMessage(senderID, 'State: %s, Payload: %s', state, payload);
+      }
   }
 }
 
@@ -373,7 +381,8 @@ function receivedPostback(event) {
 
   switch (state) {
       case 'AWAITING_NAME':
-          sendTextMessage(senderID, "You've selected " + payload.name + ". Please upload an image for the birthday card.");
+          sendTextMessage(senderID, "You've selected " + payload + ". Please upload an image for the birthday card.");
+          state = 'AWAITING_IMAGE';
           break;
       case 'START':
           // continue
