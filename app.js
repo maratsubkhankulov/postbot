@@ -320,8 +320,8 @@ function receivedMessage(event) {
   } else if (messageAttachments) {
       switch (state) {
           case 'AWAITING_IMAGE':
-            sendTextMessage(senderID, "Postcard image updated");
-            sendImageMessage(senderID);
+            sendTextMessage(senderID, "Postcard image updated %s", messageAttachments);
+            sendImageMessage(senderID, messageAttachments.payload.url);
             state = 'AWAITING_ADDRESS';
             break;
           default:
@@ -437,7 +437,7 @@ function receivedAccountLink(event) {
  * Send an image using the Send API.
  *
  */
-function sendImageMessage(recipientId) {
+function sendImageMessage(recipientId, image_url) {
   var messageData = {
     recipient: {
       id: recipientId
@@ -451,6 +451,9 @@ function sendImageMessage(recipientId) {
       }
     }
   };
+    if (image_url) {
+        messageData.message.attachment.payload.url = image_url;
+    }
 
   callSendAPI(messageData);
 }
