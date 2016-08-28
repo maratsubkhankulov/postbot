@@ -172,7 +172,7 @@ function verifyRequestSignature(req, res, buf) {
   }
 }
 
-var states = 'START', 'AWAITING_NAME', 'AWAITING_IMAGE', 'AWAITING_BLURB';
+var states = ['START', 'AWAITING_NAME', 'AWAITING_IMAGE', 'AWAITING_BLURB'];
 var state = 'START';
 
 /*
