@@ -255,6 +255,10 @@ function receivedMessage(event) {
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
     switch (messageText) {
+      case 'start':
+          sendFriendMenu(senderID):
+          break;
+
       case 'image':
         sendImageMessage(senderID);
         break;
@@ -311,7 +315,7 @@ function receivedMessage(event) {
         sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
-    sendTextMessage(senderID, "Message with attachment received");
+    sendTextMessage(senderID, "Postcard image updated");
   }
 }
 
@@ -528,6 +532,34 @@ function sendTextMessage(recipientId, messageText) {
       metadata: "DEVELOPER_DEFINED_METADATA"
     }
   };
+
+  callSendAPI(messageData);
+}
+
+function sendFriendMenu(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "The following friends have an birthday coming up in the next week, choose one to send a postcard to.",
+          buttons:[{
+            type: "postback",
+            title: "Jess Rogers",
+            payload: "DEVELOPER_DEFINED_PAYLOAD"
+          }, {
+            type: "postback",
+            title: "Al Green",
+            payload: "DEVELOPER_DEFINED_PAYLOAD"
+          }]
+        }
+      }
+    }
+  };  
 
   callSendAPI(messageData);
 }
