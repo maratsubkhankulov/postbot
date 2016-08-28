@@ -1,6 +1,6 @@
 {
     "appSecret": "",
-    "pageAccessToken": "",
-    "validationToken": "",
-    "serverURL": ""
+    "pageAccessToken": "EAAXWI3sAN20BANZB1mqBkKWLgTrliukah4O7zLuXDUJZAMQ8VoQJArPUJAWdPiE3rNIBcgJMaCnIMgT4WcOtQ2MLlZBTLPNwNZAFjOo5InhWOEbuVV9iSkJ5tPzrNJ4UZCKckpqMQOKlZBLdM9zl3QJMjWc3ZBxjRkVjXGlZBoRxfwZDZD",
+    "validationToken": "a_verify_token",
+    "serverURL": "https://postchatbot.herokuapp.com/"
 }
