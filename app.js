@@ -367,7 +367,7 @@ function receivedPostback(event) {
 
   // When a postback is called, we'll send a message back to the sender to 
   // let them know it was successful
-  action_name = payload.action;
+  var action_name = payload.action;
 
   if (action_name) {
       switch(action_name) {
