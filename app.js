@@ -367,7 +367,19 @@ function receivedPostback(event) {
 
   // When a postback is called, we'll send a message back to the sender to 
   // let them know it was successful
-  sendTextMessage(senderID, "Postback called");
+  action_name = payload.action;
+
+  if (action_name) {
+      switch(action_name) {
+          case 'set_name':
+              sendTextMessage(senderID, "You've selected " + payload.name + ". Please upload an image for the birthday card.");
+              break;
+          default:
+              sendTextMessage(senderID, "Unknown postback received: " + action_name);
+      }
+  } else {
+      sendTextMessage(senderID, "Unknown postback received");
+  }
 }
 
 /*
@@ -550,11 +562,17 @@ function sendFriendMenu(recipientId) {
           buttons:[{
             type: "postback",
             title: "Jess Rogers",
-            payload: "DEVELOPER_DEFINED_PAYLOAD"
+            payload: {
+                name: "Jess Rogers",
+                action: "set_name"
+            }
           }, {
             type: "postback",
             title: "Al Green",
-            payload: "DEVELOPER_DEFINED_PAYLOAD"
+            payload: {
+                name: "Al Green",
+                action: "set_name"
+            }
           }]
         }
       }
