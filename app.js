@@ -178,7 +178,7 @@ var state = 'START';
 var postcard_name = '';
 var postcard_address = '';
 var postcard_image_url = '';
-var postcard_image_blurb = '';
+var postcard_blurb = '';
 
 /*
  * Authorization Event
@@ -268,6 +268,7 @@ function receivedMessage(event) {
         case 'AWAITING_BLURB':
             postcard_blurb = messageText;
             sendConfirmPostcard(senderID, "That's it" + messageText + ". Add a personal message.");
+            break;
         default:
             switch (messageText) {
               case 'start':
