@@ -536,34 +536,6 @@ function sendTextMessage(recipientId, messageText) {
   callSendAPI(messageData);
 }
 
-function sendFriendMenu(recipientId) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "button",
-          text: "The following friends have an birthday coming up in the next week, choose one to send a postcard to.",
-          buttons:[{
-            type: "postback",
-            title: "Jess Rogers",
-            payload: "DEVELOPER_DEFINED_PAYLOAD"
-          }, {
-            type: "postback",
-            title: "Al Green",
-            payload: "DEVELOPER_DEFINED_PAYLOAD"
-          }]
-        }
-      }
-    }
-  };  
-
-  callSendAPI(messageData);
-}
-
 /*
  * Send a button message using the Send API.
  *
