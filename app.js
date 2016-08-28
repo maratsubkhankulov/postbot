@@ -410,6 +410,7 @@ function receivedPostback(event) {
               case 'restart':
                   sendTextMessage(senderID, "Changes discarded.");
                   state = 'START';
+                  sendFriendMenu(senderID);
                   break;
               default:
                   sendTextMessage(senderID, "Changes discarded.");
