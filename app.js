@@ -172,6 +172,9 @@ function verifyRequestSignature(req, res, buf) {
   }
 }
 
+var states = 'START', 'AWAITING_NAME', 'AWAITING_IMAGE', 'AWAITING_BLURB';
+var state = 'START';
+
 /*
  * Authorization Event
  *
@@ -367,18 +370,20 @@ function receivedPostback(event) {
 
   // When a postback is called, we'll send a message back to the sender to 
   // let them know it was successful
-  var action_name = payload.action;
 
-  if (action_name) {
-      switch(action_name) {
-          case 'set_name':
-              sendTextMessage(senderID, "You've selected " + payload.name + ". Please upload an image for the birthday card.");
-              break;
-          default:
-              sendTextMessage(senderID, "Unknown postback received: " + action_name);
-      }
-  } else {
-      sendTextMessage(senderID, "Unknown postback received: " + payload);
+  if (state) {
+      case 'AWAITING_NAME':
+          sendTextMessage(senderID, "You've selected " + payload.name + ". Please upload an image for the birthday card.");
+          break;
+      case 'START':
+          continue;
+      case 'AWAITING_IMAGE':
+          continue;
+      case 'AWAITING_BLURB':
+          continue;
+      default:
+      case 'START':
+          sendTextMessage(senderID, 'State: %s, Payload: %s', state, payload);
   }
 }
 
@@ -562,11 +567,11 @@ function sendFriendMenu(recipientId) {
           buttons:[{
             type: "postback",
             title: "Jess Rogers",
-            payload: "Jess Rogers payload"
+            payload: "Jess Rogers"
           }, {
             type: "postback",
             title: "Al Green",
-            payload: "Al Green payload"
+            payload: "Al Green"
           }]
         }
       }
@@ -574,6 +579,7 @@ function sendFriendMenu(recipientId) {
   };  
 
   callSendAPI(messageData);
+  state = 'AWAITING_NAME';
 }
 
 /*
