@@ -579,7 +579,7 @@ function sendTextMessage(recipientId, messageText) {
   callSendAPI(messageData);
 }
 
-function sendFriendMenu(recipientId) {
+function sendConfirmPostcard(recipientId) {
   var messageData = {
     recipient: {
       id: recipientId
