@@ -175,6 +175,11 @@ function verifyRequestSignature(req, res, buf) {
 var states = ['START', 'AWAITING_NAME', 'AWAITING_IMAGE', 'AWAITING_BLURB'];
 var state = 'START';
 
+var postcard_name = '';
+var postcard_address = '';
+var postcard_image_url = '';
+var postcard_image_blurb = '';
+
 /*
  * Authorization Event
  *
@@ -254,74 +259,78 @@ function receivedMessage(event) {
 
   if (messageText) {
 
-    // If we receive a text message, check to see if it matches any special
-    // keywords and send back the corresponding example. Otherwise, just echo
-    // the text we received.
-    switch (messageText) {
-      case 'start':
-          sendFriendMenu(senderID);
-          break;
+    switch(state) {
+        case 'AWAITING_ADDRESS':
+            break;
+        default:
+            switch (messageText) {
+              case 'start':
+                  sendFriendMenu(senderID);
+                  break;
 
-      case 'image':
-        sendImageMessage(senderID);
-        break;
+              case 'image':
+                sendImageMessage(senderID);
+                break;
 
-      case 'gif':
-        sendGifMessage(senderID);
-        break;
+              case 'gif':
+                sendGifMessage(senderID);
+                break;
 
-      case 'audio':
-        sendAudioMessage(senderID);
-        break;
+              case 'audio':
+                sendAudioMessage(senderID);
+                break;
 
-      case 'video':
-        sendVideoMessage(senderID);
-        break;
+              case 'video':
+                sendVideoMessage(senderID);
+                break;
 
-      case 'file':
-        sendFileMessage(senderID);
-        break;
+              case 'file':
+                sendFileMessage(senderID);
+                break;
 
-      case 'button':
-        sendButtonMessage(senderID);
-        break;
+              case 'button':
+                sendButtonMessage(senderID);
+                break;
 
-      case 'generic':
-        sendGenericMessage(senderID);
-        break;
+              case 'generic':
+                sendGenericMessage(senderID);
+                break;
 
-      case 'receipt':
-        sendReceiptMessage(senderID);
-        break;
+              case 'receipt':
+                sendReceiptMessage(senderID);
+                break;
 
-      case 'quick reply':
-        sendQuickReply(senderID);
-        break;        
+              case 'quick reply':
+                sendQuickReply(senderID);
+                break;        
 
-      case 'read receipt':
-        sendReadReceipt(senderID);
-        break;        
+              case 'read receipt':
+                sendReadReceipt(senderID);
+                break;        
 
-      case 'typing on':
-        sendTypingOn(senderID);
-        break;        
+              case 'typing on':
+                sendTypingOn(senderID);
+                break;        
 
-      case 'typing off':
-        sendTypingOff(senderID);
-        break;        
+              case 'typing off':
+                sendTypingOff(senderID);
+                break;        
 
-      case 'account linking':
-        sendAccountLinking(senderID);
-        break;
+              case 'account linking':
+                sendAccountLinking(senderID);
+                break;
 
-      default:
-        sendTextMessage(senderID, messageText);
+              default:
+                sendTextMessage(senderID, messageText);
+            }
     }
   } else if (messageAttachments) {
       switch (state) {
           case 'AWAITING_IMAGE':
-            sendTextMessage(senderID, "Postcard image updated ");
+            sendTextMessage(senderID, "Postcard image updated.");
+            sendTextMessage(senderID, "Here's what it'll look like...");
             sendImageMessage(senderID, messageAttachments[0].payload.url);
+            sendTextMessage(senderID, "Where does " + postcard_name + " live? Please provide the full address");
             state = 'AWAITING_ADDRESS';
             break;
           default:
@@ -382,6 +391,7 @@ function receivedPostback(event) {
   switch (state) {
       case 'AWAITING_NAME':
           sendTextMessage(senderID, "You've selected " + payload + ". Please upload an image for the birthday card.");
+          postcard_name = payload;
           state = 'AWAITING_IMAGE';
           break;
       case 'START':
